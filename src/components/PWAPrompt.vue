@@ -33,8 +33,11 @@ export default {
 
   methods: {
     installPWA() {
+      alert('choice')
       this.installEvent.prompt()
       this.installEvent.userChoice.then((choice) => {
+        alert(choice)
+        alert(choice.outcome)
         this.shown = false // Hide the banner once the user's clicked
         if (choice.outcome === 'accepted') {
           // Do something additional if the user chose to install
