@@ -20,7 +20,7 @@
 export default {
   data: () => ({
     installEvent: undefined,
-    shown: true,
+    shown: false,
   }),
 
   beforeMount() {
