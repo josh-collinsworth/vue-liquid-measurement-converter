@@ -33,7 +33,7 @@ export default {
 
   methods: {
     installPWA() {
-      alert('choice')
+      alert(this.installEvent)
       this.installEvent.prompt()
       this.installEvent.userChoice.then((choice) => {
         alert(choice)
