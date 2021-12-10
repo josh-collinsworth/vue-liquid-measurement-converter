@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 		<PWAPrompt />
-    <MeasurementsTable msg="Welcome to Your Vue.js App"/>
+    <MeasurementsTable />
   </div>
 </template>
 
