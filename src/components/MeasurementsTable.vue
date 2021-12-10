@@ -1,169 +1,239 @@
 <template>
   <div id="lm">
+		<div class="card">
+			<div class="flex-group">
+				<input v-model="absoluteUnit" type="number">
 
-		
-	<div class="card">
-		<div class="flex-group">
-			<input v-model="absoluteUnit" type="number">
+				<select v-model="unitOfMeasurement">
+					<option 
+						v-for="unit in units"
+						:value="unit.value"
+						:key="unit.value"
+					>
+						{{ unit.title }}
+					</option>
+				</select>
+			</div>
+		</div>
 
-			<select v-model="unit">
-				<option value="0.16666666">TSP</option>
-				<option value="0.03381402">ML</option>
-				<option value="0.5">TBSP</option>
-				<option value="1">Ounce</option>
-				<option value="8">Cup</option>
-				<option value="16">Pint</option>
-				<option value="32">Quart</option>
-				<option value="33.8140225">Liter</option>
-				<option value="128">Gallon</option>
-			</select>
+		<div
+			v-for="unit in filteredUnits"
+			class="card"
+			:key="unit.title"
+		>
+			<div class="flex-group">
+				<span class="number">{{ format(absoluteUnit * unitOfMeasurement / unit.value) }}</span>
+				<label for="ml">
+					{{ unit.title }}
+					<sup v-if="(!isMetric && unit.metric) || (isMetric && ! unit.metric)">*</sup>
+				</label>
+			</div>
+		</div>
+
+		<div class="card footnote">
+			* Rounded; not precise
 		</div>
 	</div>
-
-
-
-	<div class="card">
-		<div class="flex-group">
-			<span class="number">{{ ml }}</span>
-			<label for="ml">
-				ml<sup>*</sup>
-			</label>
-		</div>
-	</div>
-
-	<div class="card">
-		<div class="flex-group">
-			<span class="number">{{ tsp }}</span>
-			<label for="tsp">
-				tsp
-			</label>
-		</div>
-	</div>
-
-	<div class="card">
-		<div class="flex-group">
-			<span class="number">{{ tbsp }}</span>
-			<label for="tbsp">
-				tbsp
-			</label>
-		</div>
-	</div>
-
-	<div class="card">
-		<div class="flex-group">
-			<span class="number">{{ ounce }}</span>
-			<label for="oz">
-				oz
-			</label>
-		</div>
-	</div>
-
-	<div class="card">
-		<div class="flex-group">
-			<span class="number">{{ cup }}</span>
-			<label for="cup">
-				cup{{ cup != 1 ? 's' : '' }}
-			</label>
-		</div>
-	</div>
-
-	<div class="card">
-		<div class="flex-group">
-			<span class="number">{{ pint }}</span>
-			<label for="pint">
-				pint{{ pint != 1 ? 's' : '' }}
-
-			</label>
-		</div>
-	</div>
-
-	<div class="card">
-		<div class="flex-group">
-			<span class="number">{{ quart }}</span>
-			<label for="quart">
-				quart{{ quart != 1 ? 's' : '' }}
-			</label>
-		</div>
-	</div>
-
-	<div class="card">
-		<div class="flex-group">
-			<span class="number">{{ liter }}</span>
-			<label for="liter">
-				liter{{ liter != 1 ? 's' : '' }}<sup>*</sup>
-			</label>
-		</div>
-	</div>
-
-	<div class="card">
-		<div class="flex-group">
-			<span class="number">{{ gallon }}</span>
-			<label for="gallon">
-				gallon{{ gallon != 1 ? 's' : '' }}
-			</label>
-		</div>
-	</div>
-
-	<div class="card footnote">
-		* Rounded; not exact
-	</div>
-</div>
 </template>
 
 <script>
 export default {
   name: 'MeasurementsTable',
   data: () => ({
-		unit: 1,
+		units: [
+			{
+				title: 'TSP',
+				value: 0.5
+			},
+			{
+				title: 'ML',
+				value: 0.1014420675,
+				metric: true,
+			},
+			{
+				title: 'TBSP',
+				value: 1.5
+			},
+			{
+				title: 'Oz',
+				value: 3
+			},
+			{
+				title: 'Cup',
+				value: 24
+			},
+			{
+				title: 'Pint',
+				value: 48
+			},
+			{
+				title: 'Quart',
+				value: 96
+			},
+			{
+				title: 'Liter',
+				value: 101.4420675,
+				metric: true,
+			},
+			{
+				title: 'Gallon',
+				value: 384
+			},
+		],
+		unitOfMeasurement: 3,
 		absoluteUnit: 1,
-		oz: 32 //Ounces are the only true data value here every other value is a dependent computed property that multiplies or divides ounces
 	}),
 
 	methods: {
 		//Does some nice formatting on the number, if it's a decimal, to make it a little more readable and limit it to 10 total characters
 		format(num) {
 			num = Number(num)
+
+			if (this.isMetric) {
+				return parseInt(num) === num ? num : num.toFixed(3)
+			}
 			return parseInt(num) === num ? num : num.toString().substring(0, 10)
 		}
 	},
 
 	computed: {
-		ml() {
-			return parseInt(this.format(this.absoluteUnit * this.unit * 29.57352968750042))
+		filteredUnits() {
+			return this.units.filter(unit => unit.value != this.unitOfMeasurement)
 		},
 
-		tsp() {
-			return this.format(this.absoluteUnit * this.unit * 6)
-		},
-
-		tbsp() {
-			return this.format(this.absoluteUnit * this.unit * 2)
-		},
-
-		ounce() {
-			return this.format(this.absoluteUnit * this.unit)
-		},
-
-		cup() {
-			return this.format(this.absoluteUnit * this.unit / 8)
-		},
-
-		pint() {
-			return this.format(this.absoluteUnit * this.unit / 16)
-		},
-
-		quart() {
-			return this.format(this.absoluteUnit * this.unit / 32)
-		},
-
-		liter() {
-			return this.format(this.absoluteUnit * this.unit * 0.02957352968750042.toFixed(2))
-		},
-
-		gallon() {
-			return this.format(this.absoluteUnit * this.unit / 128)
+		isMetric() {
+			return this.unitOfMeasurement.toString().includes('4420675')
 		},
 	}
 }
 </script>
 
+
+<style scoped lang="scss">
+#lm {
+	margin: auto;
+	width: 100%;
+	max-width: 24rem;
+	padding: 1.5rem;
+
+	span {
+		text-align: center;
+		font-size: 1.25rem;
+		display: flex;
+		align-items: center;
+		color: var(--lightGray);
+		margin-bottom: 0.3em;
+		left: 0;
+	}
+
+	sup {
+		float: right;
+		margin-right: -1ch;
+		padding-top: .1em;
+	}
+
+	.footnote {
+		margin-top: 0.75rem;
+		font-size: .75rem;
+	}
+
+	.card {
+		display: grid;
+		border-radius: 0.25rem;
+		align-items: center;
+
+		&:first-of-type {
+			margin-bottom: 2rem;
+			background: var(--yellow);
+			width: calc(100% + 3rem);
+			max-width: unset;
+			margin: -1.5rem -1.5rem 2rem;
+			padding: 1.5rem 1.5rem 1.5rem;
+			border-radius: 0;
+
+			input {
+				font-size: 1.75em;
+				padding: 0;
+				height: 1em;
+			}
+
+			.flex-group {
+				padding-bottom: 0;
+				border-bottom: 0;
+				position: relative;
+
+				&::after {
+					content: '';
+					width: 1rem;
+					height: 1rem;
+					background: var(--yellow);	
+					position: absolute;
+					left: calc(50% - 0.5rem);
+					bottom: calc(-2rem + 1px);
+					transform: rotate(135deg);
+					clip-path: polygon(0 0, 100% 100%, 100% 0%);
+				}
+			}
+		}
+
+		h2 {
+			font-size: 2rem;
+			font-weight: bold;
+			text-align: center;
+			margin: 0 0 1em;
+		}
+
+		select,
+		input {
+			font-size: 1rem;
+			background: #f4f4f4;
+		}
+
+		select {
+			padding: 0.25rem 0.5rem;
+			border-radius: .25rem;
+		}
+
+		.flex-group {
+			display: grid;
+			align-items: baseline;
+			justify-content: space-between;
+			align-items: center;
+			grid-template-columns: 1fr max-content;
+			grid-template-rows: 1fr;
+			border-bottom: 1px solid var(--lightGray);
+
+			label {
+				text-align: right;
+				font-size: 1.25rem;
+				position: relative;
+			}
+		}
+
+		.number,
+		input {
+			font-family: "Martel", serif;
+			border: none;
+			text-align: left;
+			display: inline-block;
+			font-size: 1.25rem;
+			background: transparent;
+			width: 60vw;
+			box-shadow: none;
+			color: inherit;
+
+			@media (min-width: 440px) {
+				width: auto;
+			}
+
+			&:focus + label {
+				color: var(--yellow);
+			}
+		}
+
+		.number {
+			margin: .25rem 0;
+		}
+	}
+}
+</style>

@@ -2,6 +2,9 @@
   <div id="app">
 		<PWAPrompt />
     <MeasurementsTable />
+		<footer>
+			Made by <a href="https://joshcollinsworth.com">Josh Collinsworth</a>
+		</footer>
   </div>
 </template>
 
@@ -19,9 +22,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import url("https://fonts.googleapis.com/css?family=Barlow+Condensed:300&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Martel&display=swap");
-
 :root {
 	--white: #ffffff;
 	--orange: #ff6a13;
@@ -56,129 +56,29 @@ html {
 
 body {
 	margin: 0;
-	font-family: "Barlow Condensed";
-	background: #eee;
+	font-family: "Barlow Condensed", sans-serif;
+	background: #f4f4f4;
 	color: var(--darkGray);
 	min-height: 100vh;
 	display: grid;
 	place-content: center;
 	grid-template-columns: 100%;
+	min-height: 100vh;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 #app {
 	width: 100%;
+	min-height: 100vh;
 }
 
-#lm {
-	margin: auto;
-	width: 100%;
-	max-width: 24rem;
-	padding: 1rem;
-
-	span {
-		text-align: center;
-		font-size: 1.25rem;
-		display: flex;
-		align-items: center;
-		color: var(--lightGray);
-		margin-bottom: 0.3em;
-		left: 0;
-	}
-
-	sup {
-		float: right;
-		margin-right: -1ch;
-		padding-top: .1em;
-	}
-
-	.footnote {
-		margin-top: 1rem;
-		font-size: .75rem;
-	}
-
-	.card {
-		display: grid;
-		border-radius: 0.25rem;
-		align-items: center;
-
-		&:first-of-type {
-			margin-bottom: 2rem;
-
-			.flex-group {
-				padding-bottom: 0.5rem;
-				border-bottom: 1px solid currentColor;
-				position: relative;
-
-				&::after {
-					content: '';
-					width: 0.5rem;
-					height: 0.5rem;
-					background: currentColor;	
-					position: absolute;
-					left: calc(50% - 0.25rem);
-					bottom: -.25rem;
-					transform: rotate(135deg);
-					clip-path: polygon(0 0, 100% 100%, 100% 0%);
-				}
-			}
-		}
-
-		h2 {
-			font-size: 2rem;
-			font-weight: bold;
-			text-align: center;
-			margin: 0 0 1em;
-		}
-
-		select,
-		input {
-			font-size: 1rem;
-		}
-
-		select {
-			padding: 0.25rem 0.5rem;
-			border-radius: .25rem;
-		}
-
-		.flex-group {
-			display: grid;
-			align-items: baseline;
-			justify-content: space-between;
-			grid-template-columns: 1fr max-content;
-			grid-template-rows: 1fr;
-			border-bottom: 1px solid var(--lightGray);
-
-			label {
-				text-align: right;
-				font-size: 1.25rem;
-				position: relative;
-			}
-		}
-
-		.number,
-		input {
-			font-family: "Martel";
-			border: none;
-			text-align: left;
-			display: inline-block;
-			font-size: 1.25rem;
-			background: transparent;
-			width: 60vw;
-			box-shadow: none;
-			color: inherit;
-
-			@media (min-width: 440px) {
-				width: auto;
-			}
-
-			&:focus + label {
-				color: var(--yellow);
-			}
-		}
-
-		.number {
-			margin: .25rem 0;
-		}
-	}
+footer {
+	padding: 0.75rem 1.5rem;
+	background: var(--darkBlue);
+	color: var(--white);
+	position: sticky;
+	top: 100vh;
+	font-size: 0.75rem;
 }
 </style>
