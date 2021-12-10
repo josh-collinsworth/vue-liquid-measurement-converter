@@ -1,4 +1,10 @@
-# measurement-converter
+# Vue Liquid Measurement Converter
+
+This repo is a conversion of [this CodePen](https://codepen.io/collinsworth/pen/bGdmmrY) into a PWA, for demo purposes.
+
+What follows is the default Vue CLI README content:
+
+---
 
 ## Project setup
 ```

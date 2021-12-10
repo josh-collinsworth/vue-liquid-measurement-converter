@@ -4,7 +4,7 @@
     <MeasurementsTable />
 		<footer>
 			<div class="container">
-				Made by <a href="https://joshcollinsworth.com">Josh Collinsworth</a>
+				Made by <a href="https://joshcollinsworth.com">Josh Collinsworth</a>&emsp;|&emsp;<a href="https://github.com/josh-collinsworth/vue-liquid-measurement-converter">GitHub repo</a>
 			</div>
 		</footer>
   </div>
