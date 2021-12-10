@@ -19,6 +19,7 @@
 <script>
 export default {
   data: () => ({
+    installEvent: null,
     shown: true,
   }),
 
