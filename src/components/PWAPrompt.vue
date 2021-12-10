@@ -19,7 +19,7 @@
 <script>
 export default {
   data: () => ({
-    installEvent: null,
+    installEvent: undefined,
     shown: true,
   }),
 
@@ -35,8 +35,8 @@ export default {
     installPWA() {
       this.installEvent.prompt()
       this.installEvent.userChoice.then((choice) => {
+        this.shown = false // Hide the banner once the user's clicked
         if (choice.outcome === 'accepted') {
-          this.shown = false // Hide the banner once the user's clicked
           // Do something additional if the user chose to install
         } else {
           // Do something additional if the user declined
