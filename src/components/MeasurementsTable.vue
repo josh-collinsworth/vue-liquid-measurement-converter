@@ -1,7 +1,7 @@
 <template>
   <div id="lm">
 		<div class="card">
-			<div class="flex-group">
+			<div class="flex-group container">
 				<input v-model="absoluteUnit" type="number">
 
 				<select v-model="unitOfMeasurement">
@@ -21,7 +21,7 @@
 			class="card"
 			:key="unit.title"
 		>
-			<div class="flex-group">
+			<div class="flex-group container">
 				<span class="number">{{ format(absoluteUnit * unitOfMeasurement / unit.value) }}</span>
 				<label for="ml">
 					{{ unit.title }}
@@ -30,7 +30,7 @@
 			</div>
 		</div>
 
-		<div class="card footnote">
+		<div class="container card footnote">
 			* Rounded; not precise
 		</div>
 	</div>
@@ -113,7 +113,6 @@ export default {
 #lm {
 	margin: auto;
 	width: 100%;
-	max-width: 24rem;
 	padding: 1.5rem;
 
 	span {
@@ -145,9 +144,9 @@ export default {
 		&:first-of-type {
 			margin-bottom: 2rem;
 			background: var(--yellow);
-			width: calc(100% + 3rem);
+			width: 100vw;
 			max-width: unset;
-			margin: -1.5rem -1.5rem 2rem;
+			margin: -1.5rem calc(50% - 50vw) 2rem;
 			padding: 1.5rem 1.5rem 1.5rem;
 			border-radius: 0;
 
@@ -155,12 +154,14 @@ export default {
 				font-size: 1.75em;
 				padding: 0;
 				height: 1em;
+				width: calc(100% - 1rem);
 			}
 
 			.flex-group {
 				padding-bottom: 0;
 				border-bottom: 0;
 				position: relative;
+				margin: auto;
 
 				&::after {
 					content: '';
@@ -187,11 +188,13 @@ export default {
 		input {
 			font-size: 1rem;
 			background: #f4f4f4;
+			color: inherit;
 		}
 
 		select {
 			padding: 0.25rem 0.5rem;
 			border-radius: .25rem;
+			border: 1px solid currentColor;
 		}
 
 		.flex-group {

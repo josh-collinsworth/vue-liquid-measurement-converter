@@ -3,7 +3,9 @@
 		<PWAPrompt />
     <MeasurementsTable />
 		<footer>
-			Made by <a href="https://joshcollinsworth.com">Josh Collinsworth</a>
+			<div class="container">
+				Made by <a href="https://joshcollinsworth.com">Josh Collinsworth</a>
+			</div>
 		</footer>
   </div>
 </template>
@@ -71,6 +73,12 @@ body {
 #app {
 	width: 100%;
 	min-height: 100vh;
+}
+
+.container {
+	margin: 0 auto;
+	width: 100%;
+	max-width: 24rem;
 }
 
 footer {
