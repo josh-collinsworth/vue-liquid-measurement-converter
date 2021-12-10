@@ -62,24 +62,18 @@ body {
 	min-height: 100vh;
 	display: grid;
 	place-content: center;
+	grid-template-columns: 100%;
+}
+
+#app {
+	width: 100%;
 }
 
 #lm {
-	display: grid;
 	margin: auto;
+	width: 100%;
 	max-width: 24rem;
-	grid-template-columns: 0.8rem minmax(12rem, 20rem);
-	grid-gap: 1rem;
 	padding: 1rem;
-
-	@media (min-width: 800px) {
-		transform: skewX(29deg);
-
-		span,
-		.card {
-			transform: skewX(-29deg);
-		}
-	}
 
 	span {
 		text-align: center;
@@ -91,10 +85,43 @@ body {
 		left: 0;
 	}
 
+	sup {
+		float: right;
+		margin-right: -1ch;
+		padding-top: .1em;
+	}
+
+	.footnote {
+		margin-top: 1rem;
+		font-size: .75rem;
+	}
+
 	.card {
 		display: grid;
 		border-radius: 0.25rem;
 		align-items: center;
+
+		&:first-of-type {
+			margin-bottom: 2rem;
+
+			.flex-group {
+				padding-bottom: 0.5rem;
+				border-bottom: 1px solid currentColor;
+				position: relative;
+
+				&::after {
+					content: '';
+					width: 0.5rem;
+					height: 0.5rem;
+					background: currentColor;	
+					position: absolute;
+					left: calc(50% - 0.25rem);
+					bottom: -.25rem;
+					transform: rotate(135deg);
+					clip-path: polygon(0 0, 100% 100%, 100% 0%);
+				}
+			}
+		}
 
 		h2 {
 			font-size: 2rem;
@@ -103,38 +130,54 @@ body {
 			margin: 0 0 1em;
 		}
 
+		select,
+		input {
+			font-size: 1rem;
+		}
+
+		select {
+			padding: 0.25rem 0.5rem;
+			border-radius: .25rem;
+		}
+
 		.flex-group {
 			display: grid;
 			align-items: baseline;
 			justify-content: space-between;
 			grid-template-columns: 1fr max-content;
 			grid-template-rows: 1fr;
-			border-bottom: 1px solid;
+			border-bottom: 1px solid var(--lightGray);
 
 			label {
 				text-align: right;
 				font-size: 1.25rem;
 				position: relative;
 			}
+		}
 
-			input {
-				font-family: "Martel";
-				border: none;
-				text-align: left;
-				display: inline-block;
-				font-size: 1.25rem;
-				background: transparent;
-				width: 60vw;
-				box-shadow: none;
+		.number,
+		input {
+			font-family: "Martel";
+			border: none;
+			text-align: left;
+			display: inline-block;
+			font-size: 1.25rem;
+			background: transparent;
+			width: 60vw;
+			box-shadow: none;
+			color: inherit;
 
-				@media (min-width: 440px) {
-					width: auto;
-				}
-
-				&:focus + label {
-					color: var(--yellow);
-				}
+			@media (min-width: 440px) {
+				width: auto;
 			}
+
+			&:focus + label {
+				color: var(--yellow);
+			}
+		}
+
+		.number {
+			margin: .25rem 0;
 		}
 	}
 }
