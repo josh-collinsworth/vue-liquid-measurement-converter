@@ -1,16 +1,19 @@
 <template>
   <div id="app">
+		<PWAPrompt />
     <MeasurementsTable msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
 
 <script>
 import MeasurementsTable from './components/MeasurementsTable.vue'
+import PWAPrompt from './components/PWAPrompt.vue'
 
 export default {
   name: 'App',
   components: {
-    MeasurementsTable
+    MeasurementsTable,
+    PWAPrompt
   }
 }
 </script>
@@ -19,11 +22,15 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Barlow+Condensed:300&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Martel&display=swap");
 
-$orange: #ff6a13;
-$yellow: #ffd100;
-$lightGray: #a7a8aa;
-$darkGray: #53565a;
-$lightBlue: #7ba7bc;
+:root {
+	--white: #ffffff;
+	--orange: #ff6a13;
+	--yellow: #ffd100;
+	--lightGray: #a7a8aa;
+	--darkGray: #53565a;
+	--lightBlue: #7ba7bc;
+	--darkBlue: #34657f;
+}
 
 *,
 *:before,
@@ -36,11 +43,11 @@ $lightBlue: #7ba7bc;
 
 *:focus {
 	outline: none;
-	background-color: $yellow;
+	background-color: var(--yellow);
 }
 
 *::selection {
-	background: $yellow;
+	background: var(--yellow);
 }
 
 html {
@@ -51,7 +58,7 @@ body {
 	margin: 0;
 	font-family: "Barlow Condensed";
 	background: #eee;
-	color: $darkGray;
+	color: var(--darkGray);
 	min-height: 100vh;
 	display: grid;
 	place-content: center;
@@ -79,7 +86,7 @@ body {
 		font-size: 1.25rem;
 		display: flex;
 		align-items: center;
-		color: $lightGray;
+		color: var(--lightGray);
 		margin-bottom: 0.3em;
 		left: 0;
 	}
@@ -125,11 +132,10 @@ body {
 				}
 
 				&:focus + label {
-					color: $yellow;
+					color: var(--yellow);
 				}
 			}
 		}
 	}
 }
-
 </style>
