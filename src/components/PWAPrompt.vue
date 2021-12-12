@@ -87,7 +87,7 @@ export default {
     line-height: 1;
     color: var(--darkGray);
     text-transform: uppercase;
-    font-weight: bold;
+    font-weight: 600;
   }
 
   .close-button {
