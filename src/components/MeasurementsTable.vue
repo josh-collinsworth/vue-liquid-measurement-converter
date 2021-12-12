@@ -27,10 +27,10 @@
 		>
 			<div class="flex-group container">
 				<span class="number" v-html="format(absoluteUnit * unitOfMeasurement / unit.value)"></span>
-				<label for="ml">
+				<span class="label">
 					{{ unit.title }}
 					<sup class="asterisk" v-if="(!isMetric && unit.metric) || (isMetric && ! unit.metric)">*</sup>
-				</label>
+				</span>
 			</div>
 		</div>
 
@@ -264,10 +264,14 @@ export default {
 			padding-bottom: 0.5rem;
 			border-bottom: 1px solid var(--accent);
 
-			label {
+			.label {
 				text-align: right;
 				font-size: 1.25rem;
 				position: relative;
+				line-height: 1;
+				display: inline-block;
+				color: inherit;
+				margin: 0;
 			}
 		}
 
