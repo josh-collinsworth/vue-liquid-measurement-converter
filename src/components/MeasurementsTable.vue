@@ -3,9 +3,9 @@
 		<div class="card">
 			<div class="flex-group container">
 				<div>
-				<button @click="increment">+</button>
-				<input v-model="absoluteUnit" type="number" />
-				<button @click="decrement">-</button>
+					<button @click="increment" title="Plus one">+</button>
+					<input v-model="absoluteUnit" type="number" />
+					<button @click="decrement" title="Minus one">-</button>
 				</div>
 
 				<select v-model="unitOfMeasurement">
@@ -26,10 +26,16 @@
 			:key="unit.title"
 		>
 			<div class="flex-group container">
-				<span class="number" v-html="format(absoluteUnit * unitOfMeasurement / unit.value)"></span>
+				<span
+					class="number"
+					v-html="format(absoluteUnit * unitOfMeasurement / unit.value)"
+				/>
 				<span class="label">
 					{{ unit.title }}
-					<sup class="asterisk" v-if="(!isMetric && unit.metric) || (isMetric && ! unit.metric)">*</sup>
+					<sup
+						class="asterisk"
+						v-if="(!isMetric && unit.metric) || (isMetric && ! unit.metric)"
+					>*</sup>
 				</span>
 			</div>
 		</div>
@@ -84,7 +90,7 @@ export default {
 				value: 384
 			},
 		],
-		fractions: [128, 64, 32, 16, 8, 6, 4, 3, 2],
+		fractions: [128, 64, 32, 16, 10, 8, 6, 5, 4, 3, 2],
 		unitOfMeasurement: 3,
 		absoluteUnit: 2,
 	}),
@@ -94,16 +100,15 @@ export default {
 		format(num) {
 			num = Number(num)
 
-			if (this.isMetric) {
+			const formattedNum = parseInt(num) === num ? num : num.toString().substring(0, 10)
+
+			if (this.isConvertibleToFraction(formattedNum)) {
+				return this.convertToFraction(formattedNum)
+			} else if (this.isMetric) {
 				return parseInt(num) === num ? num : num.toFixed(3)
 			}
-			const finalNum = parseInt(num) === num ? num : num.toString().substring(0, 10)
 
-			if (this.isConvertibleToFraction(finalNum)) {
-				return this.convertToFraction(finalNum)
-			}
-
-			return finalNum
+			return formattedNum
 		},
 
 		increment() {
