@@ -1,5 +1,5 @@
 <template>
-  <transition name="fade-down-in" appear>
+  <transition name="fade-up-in" appear>
     <div
       v-if="shown"
       class="pwa-prompt"
@@ -64,7 +64,7 @@ export default {
   font-size: 1.25rem;
   z-index: 20;
   line-height: 1;
-  top: 0;
+  bottom: 0;
   left: 0;
   width: 100vw;
   padding: 1rem;
@@ -116,13 +116,13 @@ export default {
   }
 }
 
-.fade-down-in-enter-active, .fade-down-in-leave-active {
+.fade-up-in-enter-active, .fade-up-in-leave-active {
   transition: opacity 1s cubic-bezier(0.165, 0.84, 0.44, 1), transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
   transform: translateY(0);
 }
 
-.fade-down-in-enter, .fade-down-in-leave-to {
+.fade-up-in-enter, .fade-up-in-leave-to {
   opacity: 0;
-  transform: translateY(-4rem);
+  transform: translateY(4rem);
 }
 </style>
