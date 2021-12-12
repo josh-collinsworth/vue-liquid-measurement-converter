@@ -25,13 +25,11 @@ export default {
 
 <style lang="scss">
 :root {
-	--white: #ffffff;
-	--orange: #ff6a13;
-	--yellow: #ffd100;
-	--lightGray: #a7a8aa;
-	--darkGray: #53565a;
-	--lightBlue: #7ba7bc;
-	--darkBlue: #34657f;
+	--background: #e0fbfc;
+	--bright: #ee6c4d;
+	--dark: #3d5a80;
+	--darker: #293241;
+	--accent: #98c1d9;
 }
 
 *,
@@ -44,12 +42,12 @@ export default {
 }
 
 *:focus {
-	outline: none;
-	background-color: var(--yellow);
+	outline: 2px solid var(--bright);
+	outline-offset: 2px;
 }
 
 *::selection {
-	background: var(--yellow);
+	background: var(--bright);
 }
 
 html {
@@ -59,8 +57,8 @@ html {
 body {
 	margin: 0;
 	font-family: "Barlow Condensed", sans-serif;
-	background: #f4f4f4;
-	color: var(--darkGray);
+	background: var(--background);
+	color: var(--dark);
 	min-height: 100vh;
 	display: grid;
 	place-content: center;
@@ -83,10 +81,14 @@ body {
 
 footer {
 	padding: 0.75rem 1.5rem;
-	background: var(--darkBlue);
-	color: var(--white);
+	background: var(--dark);
+	color: var(--background);
 	position: sticky;
 	top: 100vh;
 	font-size: 0.75rem;
+
+	*:focus {
+		outline-color: var(--accent);
+	}
 }
 </style>

@@ -8,7 +8,7 @@
       Add app to home screen?
 
       <button class="install-button" @click="installPWA">
-        Install
+        Install!
       </button>
 
       <button class="close-button" @click="dismissPrompt">
@@ -72,8 +72,8 @@ export default {
   align-items: center;
   justify-content: center;
   height: 4rem;
-  background: var(--darkBlue);
-  color: var(--white);
+  background: var(--dark);
+  color: var(--background);
   transform: translateY(0);
   margin: 0;
 
@@ -81,11 +81,10 @@ export default {
     font-size: inherit;
     margin: 0 0 0 0.5rem;
     padding: 0.25em 0.5em;
-    background-color: var(--yellow);
+    background-color: var(--bright);
     border: 0;
     border-radius: 4px;
     line-height: 1;
-    color: var(--darkGray);
     text-transform: uppercase;
     font-weight: 600;
   }

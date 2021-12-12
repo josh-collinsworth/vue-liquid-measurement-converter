@@ -2,7 +2,11 @@
   <div id="lm">
 		<div class="card">
 			<div class="flex-group container">
-				<input v-model="absoluteUnit" type="number">
+				<div>
+				<button @click="increment">+</button>
+				<input v-model="absoluteUnit" type="number" />
+				<button @click="decrement">-</button>
+				</div>
 
 				<select v-model="unitOfMeasurement">
 					<option 
@@ -22,10 +26,10 @@
 			:key="unit.title"
 		>
 			<div class="flex-group container">
-				<span class="number">{{ format(absoluteUnit * unitOfMeasurement / unit.value) }}</span>
+				<span class="number" v-html="format(absoluteUnit * unitOfMeasurement / unit.value)"></span>
 				<label for="ml">
 					{{ unit.title }}
-					<sup v-if="(!isMetric && unit.metric) || (isMetric && ! unit.metric)">*</sup>
+					<sup class="asterisk" v-if="(!isMetric && unit.metric) || (isMetric && ! unit.metric)">*</sup>
 				</label>
 			</div>
 		</div>
@@ -80,8 +84,9 @@ export default {
 				value: 384
 			},
 		],
+		fractions: [128, 64, 32, 16, 8, 6, 4, 3, 2],
 		unitOfMeasurement: 3,
-		absoluteUnit: 1,
+		absoluteUnit: 2,
 	}),
 
 	methods: {
@@ -92,7 +97,45 @@ export default {
 			if (this.isMetric) {
 				return parseInt(num) === num ? num : num.toFixed(3)
 			}
-			return parseInt(num) === num ? num : num.toString().substring(0, 10)
+			const finalNum = parseInt(num) === num ? num : num.toString().substring(0, 10)
+
+			if (this.isConvertibleToFraction(finalNum)) {
+				return this.convertToFraction(finalNum)
+			}
+
+			return finalNum
+		},
+
+		increment() {
+			this.absoluteUnit += 1
+		},
+
+		decrement() {
+			this.absoluteUnit -= 1
+		},
+
+		isConvertibleToFraction(number) {
+			if (this.fractions.includes(1 / number)) {
+				return true
+			}
+
+			return false
+		},
+
+		convertToFraction(number) {
+			let whichFraction
+
+			this.fractions.forEach((fraction) => {
+				if (1 / number === fraction) {
+					whichFraction = fraction 
+				}
+			})
+
+			if (whichFraction) {
+				return `<span class="fraction"><sup>1</sup>/<sub>${whichFraction}</sub></span>`
+			}
+			
+			return null
 		}
 	},
 
@@ -109,7 +152,7 @@ export default {
 </script>
 
 
-<style scoped lang="scss">
+<style lang="scss">
 #lm {
 	margin: auto;
 	width: 100%;
@@ -120,15 +163,22 @@ export default {
 		font-size: 1.25rem;
 		display: flex;
 		align-items: center;
-		color: var(--lightGray);
+		color: var(--accent);
 		margin-bottom: 0.3em;
 		left: 0;
 	}
 
-	sup {
-		float: right;
+	.fraction {
+		display: inline-block;
+		position: relative;
+		top: -0.5rem;
+		color: inherit;
+	}
+
+	.asterisk {
+		position: absolute;
 		margin-right: -1ch;
-		padding-top: .1em;
+		top: 0;
 	}
 
 	.footnote {
@@ -143,19 +193,19 @@ export default {
 
 		&:first-of-type {
 			margin-bottom: 2rem;
-			background: var(--darkBlue);
+			background: var(--accent);
 			width: 100vw;
 			max-width: unset;
 			margin: -1.5rem calc(50% - 50vw) 2rem;
-			padding: 1.5rem 1.5rem 1.5rem;
+			padding: 1rem 1.5rem 1rem;
 			border-radius: 0;
 
 			input {
 				font-size: 1.75em;
 				padding: 0;
-				height: 1em;
-				width: calc(100% - 1rem);
-				color: var(--yellow);
+				height: auto;
+				width: 100%;
+				color: var(--dark);
 			}
 
 			.flex-group {
@@ -163,32 +213,26 @@ export default {
 				border-bottom: 0;
 				position: relative;
 				margin: auto;
+				align-items: center;
 
 				&::after {
 					content: '';
 					width: 1rem;
 					height: 1rem;
-					background: var(--darkBlue);	
+					background: var(--accent);	
 					position: absolute;
 					left: calc(50% - 0.5rem);
-					bottom: calc(-2rem + 1px);
+					bottom: calc(-1.5rem + 1px);
 					transform: rotate(135deg);
 					clip-path: polygon(0 0, 100% 100%, 100% 0%);
 				}
 			}
 		}
 
-		h2 {
-			font-size: 2rem;
-			font-weight: bold;
-			text-align: center;
-			margin: 0 0 1em;
-		}
-
 		select,
 		input {
 			font-size: 1rem;
-			background: #f4f4f4;
+			background: var(--background);
 			color: inherit;
 		}
 
@@ -196,22 +240,29 @@ export default {
 			padding: 0.25rem 0.5rem;
 			border-radius: .25rem;
 			border: 1px solid currentColor;
-			color: var(--darkBlue);
+			color: var(--dark);
 			font-weight: 600;
+		}
 
-			&:focus {
-				outline: 2px solid var(--yellow);
-			}
+		button {
+			font-weight: bold;
+			font-size: 1.5rem;
+			line-height: 1;
+			color: var(--bright);
+			background: transparent;
+			border: 0;
+			position: relative;
+			left: -0.25rem;
 		}
 
 		.flex-group {
-			display: grid;
-			align-items: baseline;
+			display: flex;
 			justify-content: space-between;
-			align-items: center;
+			align-items: flex-end;
 			grid-template-columns: 1fr max-content;
 			grid-template-rows: 1fr;
-			border-bottom: 1px solid var(--lightGray);
+			padding-bottom: 0.5rem;
+			border-bottom: 1px solid var(--accent);
 
 			label {
 				text-align: right;
@@ -237,12 +288,14 @@ export default {
 			}
 
 			&:focus + label {
-				color: var(--yellow);
+				color: var(--bright);
 			}
 		}
 
 		.number {
-			margin: .25rem 0;
+			margin: 0.75rem 0 -1.25rem;
+			height: 2.2em;
+			overflow: visible;
 		}
 	}
 }

@@ -1,7 +1,7 @@
 module.exports = {
   pwa: {
     name: "Liquid Measurement Converter",
-    themeColor: "#ffd100",
+    themeColor: "#3d5a80",
     icons: {
       favicon32: 'img/icons/ios/32.png',
       favicon16: 'img/icons/ios/16.png',
