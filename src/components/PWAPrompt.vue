@@ -2,7 +2,8 @@
   <transition name="fade-down-in" appear>
     <div
       v-if="shown"
-      :class="['pwa-prompt', { shown }]"
+      class="pwa-prompt"
+      :class="[{ shown }]"
     >
       Add app to home screen?
 
@@ -18,6 +19,7 @@
     </div>
   </transition>
 </template>
+
 
 <script>
 export default {

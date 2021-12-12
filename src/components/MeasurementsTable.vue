@@ -143,7 +143,7 @@ export default {
 
 		&:first-of-type {
 			margin-bottom: 2rem;
-			background: var(--yellow);
+			background: var(--darkBlue);
 			width: 100vw;
 			max-width: unset;
 			margin: -1.5rem calc(50% - 50vw) 2rem;
@@ -155,6 +155,7 @@ export default {
 				padding: 0;
 				height: 1em;
 				width: calc(100% - 1rem);
+				color: var(--yellow);
 			}
 
 			.flex-group {
@@ -167,7 +168,7 @@ export default {
 					content: '';
 					width: 1rem;
 					height: 1rem;
-					background: var(--yellow);	
+					background: var(--darkBlue);	
 					position: absolute;
 					left: calc(50% - 0.5rem);
 					bottom: calc(-2rem + 1px);
@@ -195,6 +196,12 @@ export default {
 			padding: 0.25rem 0.5rem;
 			border-radius: .25rem;
 			border: 1px solid currentColor;
+			color: var(--darkBlue);
+			font-weight: 600;
+
+			&:focus {
+				outline: 2px solid var(--yellow);
+			}
 		}
 
 		.flex-group {
