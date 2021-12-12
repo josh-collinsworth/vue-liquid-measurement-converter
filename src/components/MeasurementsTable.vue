@@ -120,6 +120,11 @@ export default {
 		},
 
 		isConvertibleToFraction(number) {
+			// Need special cases to handle imperfect division
+			if ([3, 6].includes(Math.round(1 / number))) {
+				return true
+			}
+	
 			if (this.fractions.includes(1 / number)) {
 				return true
 			}
@@ -131,9 +136,9 @@ export default {
 			let whichFraction
 
 			this.fractions.forEach((fraction) => {
-				if (1 / number === fraction) {
+				if (Math.round(1 / number) === fraction) {
 					whichFraction = fraction 
-				}
+				} 
 			})
 
 			if (whichFraction) {
@@ -201,7 +206,7 @@ export default {
 			background: var(--accent);
 			width: 100vw;
 			max-width: unset;
-			margin: -1.5rem calc(50% - 50vw) 2rem;
+			margin: -1.5rem calc(50% - 50vw) 1rem;
 			padding: 1rem 1.5rem 1rem;
 			border-radius: 0;
 
