@@ -5,11 +5,14 @@
       :class="['pwa-prompt', { shown }]"
     >
       Add app to home screen?
+
       <button class="install-button" @click="installPWA">
         Install
       </button>
-      <button class="close-button" @click="() => { shown = false }">
+
+      <button class="close-button" @click="dismissPrompt">
         <span aria-hidden="true">×</span>
+        <!-- Accessible text, so screen readers don't just read a symbol -->
         <span class="sr">Dismiss without installing</span>
       </button>
     </div>
@@ -35,7 +38,7 @@ export default {
     installPWA() {
       this.installEvent.prompt()
       this.installEvent.userChoice.then((choice) => {
-        this.shown = false // Hide the banner once the user's clicked
+        this.dismissPrompt() // Hide the banner once the user's clicked
         if (choice.outcome === 'accepted') {
           // Do something additional if the user chose to install
         } else {
@@ -53,6 +56,7 @@ export default {
 
 
 <style scoped lang="scss">
+// If repurposing this component, you'll want to update the CSS variables.
 .pwa-prompt {
   position: fixed;
   font-size: 1.25rem;
@@ -96,6 +100,7 @@ export default {
     line-height: 1;
   }
 
+  // For the accessible text. Most projects have their own .sr-only class or similar in the base styles.
   .sr {
     position: absolute;
     width: 1px;
