@@ -96,9 +96,9 @@ export default {
 				value: 384
 			},
 		],
-		fractions: [128, 64, 32, 24,	 16, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
-		unitOfMeasurement:0.5,
-		absoluteUnit: 1,
+		fractions: [128, 64, 32, 24, 16, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
+		unitOfMeasurement: 3,
+		absoluteUnit: 2,
 	}),
 
 	methods: {
