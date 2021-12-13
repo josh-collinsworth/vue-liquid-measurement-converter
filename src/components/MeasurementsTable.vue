@@ -3,9 +3,13 @@
 		<div class="card">
 			<div class="flex-group container">
 				<div>
-					<button @click="increment" title="Plus one">+</button>
+					<button @click="increment" title="Plus one">
+						<span class="icon">+</span>
+					</button>
 					<input v-model="absoluteUnit" type="number" />
-					<button @click="decrement" title="Minus one">-</button>
+					<button @click="decrement" title="Minus one">
+						<span class="icon">-</span>
+					</button>
 				</div>
 
 				<select v-model="unitOfMeasurement">
@@ -47,6 +51,8 @@
 </template>
 
 <script>
+import frac from 'frac';
+
 export default {
   name: 'MeasurementsTable',
   data: () => ({
@@ -90,9 +96,9 @@ export default {
 				value: 384
 			},
 		],
-		fractions: [128, 64, 32, 16, 10, 8, 6, 5, 4, 3, 2],
-		unitOfMeasurement: 3,
-		absoluteUnit: 2,
+		fractions: [128, 64, 32, 24,	 16, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
+		unitOfMeasurement:0.5,
+		absoluteUnit: 1,
 	}),
 
 	methods: {
@@ -100,15 +106,15 @@ export default {
 		format(num) {
 			num = Number(num)
 
-			const formattedNum = parseInt(num) === num ? num : num.toString().substring(0, 10)
+			// const { top, bottom } = this.decimalToFraction(num)
+			const [_, numerator, denominator] = frac(num, 128)
 
-			if (this.isConvertibleToFraction(formattedNum)) {
-				return this.convertToFraction(formattedNum)
-			} else if (this.isMetric) {
-				return parseInt(num) === num ? num : num.toFixed(3)
+			if (numerator < denominator && numerator > 0 && this.fractions.includes(denominator)) {
+				console.log(_)
+				return `${numerator} / ${denominator}`
 			}
 
-			return formattedNum
+			return parseInt(num) === num ? num : num.toString().substring(0, 10)
 		},
 
 		increment() {
@@ -119,33 +125,31 @@ export default {
 			this.absoluteUnit -= 1
 		},
 
-		isConvertibleToFraction(number) {
-			// Need special cases to handle imperfect division
-			if ([3, 6].includes(Math.round(1 / number))) {
-				return true
+		decimalToFraction(_decimal) {
+			if (_decimal == 1){
+				return {
+					top		: 1,
+					bottom	: 1,
+					display	: 1 + ':' + 1
+				};
+			} else {
+				const gcd = (a, b) => {
+					return (b) ? gcd(b, a % b) : a
+				}
+
+				var top		= _decimal.toString().replace(/\d+[.]/, '')
+				var bottom	= Math.pow(10, top.length)
+				if (_decimal > 1) {
+					top	= +top + Math.floor(_decimal) * bottom
+				}
+				var x = gcd(top, bottom)
+				console.log(top)
+				return {
+					top	: (top / x),
+					bottom	: (bottom / x),
+					display	: (top / x) + ':' + (bottom / x)
+				};
 			}
-	
-			if (this.fractions.includes(1 / number)) {
-				return true
-			}
-
-			return false
-		},
-
-		convertToFraction(number) {
-			let whichFraction
-
-			this.fractions.forEach((fraction) => {
-				if (Math.round(1 / number) === fraction) {
-					whichFraction = fraction 
-				} 
-			})
-
-			if (whichFraction) {
-				return `<span class="fraction"><sup>1</sup>/<sub>${whichFraction}</sub></span>`
-			}
-			
-			return null
 		}
 	},
 
@@ -210,6 +214,11 @@ export default {
 			padding: 1rem 1.5rem 1rem;
 			border-radius: 0;
 
+			::selection {
+				background-color: var(--bright);
+				// color: var(--background);
+			}
+
 			input {
 				font-size: 1.75em;
 				padding: 0;
@@ -258,11 +267,26 @@ export default {
 			font-weight: bold;
 			font-size: 1.5rem;
 			line-height: 1;
-			color: var(--bright);
-			background: transparent;
-			border: 0;
+			color: var(--accent);
+			background: var(--bright);
+			border: 1px solid currentColor;
+			border-radius: 1rem;
+			height: 1.5rem;
+			width: 1.5rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			position: relative;
 			left: -0.25rem;
+
+			.icon {
+				position: relative;
+				top: 0.03em;
+				width: 100%;
+				display: block;
+				transform: scale(1.6);
+				transform-origin: center;
+			}
 		}
 
 		.flex-group {

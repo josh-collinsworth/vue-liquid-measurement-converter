@@ -5,10 +5,12 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "preview": "npm run build && npx http-server dist"
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "frac": "^1.1.2",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11"
   },

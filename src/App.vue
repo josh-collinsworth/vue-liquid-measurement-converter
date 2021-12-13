@@ -47,7 +47,8 @@ export default {
 }
 
 *::selection {
-	background: var(--bright);
+	background: var(--accent);
+	color: var(--dark);
 }
 
 html {
